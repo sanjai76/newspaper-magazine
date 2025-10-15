@@ -37,8 +37,9 @@ const ArticleList = () => {
               <div className="article-image">
                 {article.image && (
                   <img
-                    src={`http://127.0.0.1:8000${article.image}`}
+                    src={article.image}
                     alt={article.title}
+                    style={{ width: "100%", borderRadius: "10px" }}
                   />
                 )}
                 <div className="overlay">
