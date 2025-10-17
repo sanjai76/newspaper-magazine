@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyPaper</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .logo img {
+            height: 80px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .right-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .signin-btn {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .user-icon {
+            font-size: 22px;
+        }
+
+        /* Hamburger Menu */
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 800px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                padding: 20px;
+                border-bottom: 2px solid #eee;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            /* Keep right-section visible */
+            .right-section {
+                position: absolute;
+                top: 50%;
+                right: 20px;
+                transform: translateY(-50%);
+            }
+
+            /* Center hamburger */
+            .menu-toggle {
+                display: block;
+                margin: 0 auto;
+            }
+
+            .navbar {
+                justify-content: center;
+                position: relative;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .menu-toggle {
+                margin-right: 140px;
+            }
+        }
+
+        /* contact */
+        .contact-section {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 40px 20px;
+        }
+
+        .contact-box,
+        .form-box {
+            background-color: #b5a377;
+            border-radius: 10px;
+            padding: 40px 30px;
+            flex: 1 1 350px;
+            max-width: 450px;
+            box-sizing: border-box;
+        }
+
+        .contact-box h2,
+        .form-box h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            color: #000;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .contact-info i {
+            font-size: 22px;
+            margin-top: 3px;
+        }
+
+        .contact-info p {
+            margin: 0;
+            line-height: 1.5;
+            font-size: 15px;
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            outline: none;
+            border-radius: 20px;
+            background: #fff;
+            font-size: 14px;
+            color: #333;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            border-radius: 15px;
+            height: 120px;
+            resize: none;
+        }
+
+        .submit-btn {
+            display: block;
+            margin: 0 auto;
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #333;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .contact-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-box,
+            .form-box {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        /* map */
+        .map-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            max-width: 700px;
+            /* controls max size */
+            height: 400px;
+            border: 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .map-container iframe {
+                height: 300px;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            color: #fff;
+            padding: 30px 5% 10px;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #444;
+        }
+
+        .footer-top img {
+            height: 80px;
+        }
+
+        .footer-top input {
+            padding: 10px;
+            border-radius: 20px;
+            border: none;
+            width: 250px;
+        }
+
+        .footer-top button {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            background: #c5a56f;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .footer-mid {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 20px 0;
+            border-bottom: 1px solid #444;
+        }
+
+        .footer-mid h3 {
+            margin-bottom: 10px;
+        }
+
+        .footer-mid p,
+        .footer-mid a {
+            margin: 5px 0;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .socials {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .socials a {
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding-top: 10px;
+            font-size: 14px;
+        }
+
+        .footer-bottom a {
+            color: #c5a56f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .see-more {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #c5a56f;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="image/logo.png" alt="logo">
+        </div>
+
+        <nav class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="lastest-news.html">Latest News</a>
+            <a href="business.html">Business</a>
+            <a href="Education.html">Education</a>
+            <a href="politics.html">Politics</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <!-- Hamburger in center -->
+        <i class="fas fa-bars menu-toggle"></i>
+
+        <!-- Sign in + Account always top right -->
+        <div class="right-section">
+            <a href="login.html"><button class="signin-btn">SIGN IN</button></a>
+            <i class="fa-regular fa-circle-user user-icon"></i>
+        </div>
+    </header>
+
+    <div class="contact-section">
+        <!-- Left Box -->
+        <div class="contact-box">
+            <h2>Contact Us</h2>
+
+            <div class="contact-info">
+                <i class="fas fa-map-marker-alt"></i>
+                <p>
+                    123 Park Avenue<br>
+                    Near City Mall, Green Street<br>
+                    Chennai – 600001, Tamil Nadu
+                </p>
+            </div>
+
+            <div class="contact-info">
+                <i class="fas fa-phone-alt"></i>
+                <p>+91 8967350978</p>
+            </div>
+
+            <div class="contact-info">
+                <i class="fas fa-envelope"></i>
+                <p>dailypaper@gmail.com</p>
+            </div>
+        </div>
+
+        <!-- Right Box -->
+        <div class="form-box">
+            <h2>Get In Touch</h2>
+            <form>
+                <div class="form-group">
+                    <input type="text" placeholder="User Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Mail Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" placeholder="Phone Number" required>
+                </div>
+                <div class="form-group">
+                    <textarea placeholder="Discription" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">SUBMIT</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- google map -->
+    <div class="map-container">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3947.1932943573133!2d76.99179629999999!3d8.3826398!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b05a596a2e8c029%3A0x33557e0dd88e8624!2sVizhinjam%20Junction%2C%20Vizhinjam%2C%20Kerala%20695521!5e0!3m2!1sen!2sin!4v1759746096013!5m2!1sen!2sin"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <img src="image/Screenshot 2025-09-16 134853.png" alt="Logo">
+            <div>
+                <input type="email" placeholder="example@gmail.com">
+                <button>SUBSCRIBE NOW</button>
+            </div>
+        </div>
+
+        <div class="footer-mid">
+            <!-- Get In Touch -->
+            <div>
+                <h3>Get In Touch</h3>
+                <p><strong>Address:</strong> 123, Main Street, Kanniyakumari.</p>
+                <p><strong>Email:</strong> dailypaper@gmail.com</p>
+                <p><strong>Phone:</strong> +91 8967350978</p>
+                <div class="socials">
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <!-- Gallery -->
+            <div class="gallery">
+                <h3>Gallery</h3>
+                <div class="gallery-grid">
+                    <img src="image/footer1.jpg" alt="Gallery 1">
+                    <img src="image/footer2.jpg" alt="Gallery 2">
+                    <img src="image/footer3.jpg" alt="Gallery 3">
+                    <img src="image/footer4.jpg" alt="Gallery 4">
+                    <img src="image/footer5.png" alt="Gallery 5" class="hidden">
+                    <img src="image/footer6.jpg" alt="Gallery 6" class="hidden">
+                    <img src="image/footer7.jpg" alt="Gallery 7" class="hidden">
+                    <img src="image/footer8.jpg" alt="Gallery 8" class="hidden">
+                    <img src="image/footer9.jpg" alt="Gallery 9" class="hidden">
+                    <img src="https://dummyimage.com/100x100/e83e8c/fff" alt="Gallery 10" class="hidden">
+                    <img src="https://dummyimage.com/100x100/6610f2/fff" alt="Gallery 11" class="hidden">
+                    <img src="https://dummyimage.com/100x100/343a40/fff" alt="Gallery 12" class="hidden">
+                    <img src="https://dummyimage.com/100x100/007bff/fff" alt="Gallery 13" class="hidden">
+                    <img src="https://dummyimage.com/100x100/198754/fff" alt="Gallery 14" class="hidden">
+                    <img src="https://dummyimage.com/100x100/d63384/fff" alt="Gallery 15" class="hidden">
+                    <img src="https://dummyimage.com/100x100/0dcaf0/fff" alt="Gallery 16" class="hidden">
+                </div>
+                <a href="#" class="see-more">See More →</a>
+            </div>
+
+            <!-- Categories -->
+            <div>
+                <h3>Categories</h3>
+                <a href="home.html">
+                    <p>> Magazine</p>
+                </a>
+                <a href="lastest-news.html">
+                    <p>> Latest News</p>
+                </a>
+                <a href="politics.html">
+                    <p>> Politics</p>
+                </a>
+                <a href="business.html">
+                    <p>> Business</p>
+                </a>
+                <a href="Education.html">
+                    <p>> Education</p>
+                </a>
+                <a href="contact.html">
+                    <p>> Contact</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© DailyPaper, All rights reserved</p>
+            <p>Designed By, <a href="#">GSO INFO TECH</a></p>
+        </div>
+    </footer>
+
+
+    <script>
+        // Toggle dropdown menu
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        const seeMoreBtn = document.querySelector('.see-more');
+        const galleryItems = document.querySelectorAll('.gallery-grid img');
+        let visibleCount = 4; // already visible
+
+        seeMoreBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Show next 4 images
+            let nextCount = visibleCount + 4;
+            for (let i = visibleCount; i < nextCount && i < galleryItems.length; i++) {
+                galleryItems[i].classList.remove('hidden');
+            }
+
+            visibleCount = nextCount;
+
+            // Hide button if all images are visible
+            if (visibleCount >= galleryItems.length) {
+                seeMoreBtn.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

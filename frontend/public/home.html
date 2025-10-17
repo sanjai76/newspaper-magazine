@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyPaper</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .logo img {
+            height: 80px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .right-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .signin-btn {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .user-icon {
+            font-size: 22px;
+        }
+
+        /* Hamburger Menu */
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 800px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                padding: 20px;
+                border-bottom: 2px solid #eee;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            /* Keep right-section visible */
+            .right-section {
+                position: absolute;
+                top: 50%;
+                right: 20px;
+                transform: translateY(-50%);
+            }
+
+            /* Center hamburger */
+            .menu-toggle {
+                display: block;
+                margin: 0 auto;
+            }
+
+            .navbar {
+                justify-content: center;
+                position: relative;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .menu-toggle {
+                margin-right: 140px;
+            }
+        }
+
+
+
+        /* Footer */
+        footer {
+            background: #000;
+            color: #fff;
+            padding: 30px 5% 10px;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #444;
+        }
+
+        .footer-top img {
+            height: 80px;
+        }
+
+        .footer-top input {
+            padding: 10px;
+            border-radius: 20px;
+            border: none;
+            width: 250px;
+        }
+
+        .footer-top button {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            background: #c5a56f;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .footer-mid {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 20px 0;
+            border-bottom: 1px solid #444;
+        }
+
+        .footer-mid h3 {
+            margin-bottom: 10px;
+        }
+
+        .footer-mid p,
+        .footer-mid a {
+            margin: 5px 0;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .socials {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .socials a {
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding-top: 10px;
+            font-size: 14px;
+        }
+
+        .footer-bottom a {
+            color: #c5a56f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .see-more {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #c5a56f;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Background Banner */
+        .banner {
+            background: url(image/paper-bg.jpg) no-repeat center center/cover;
+            min-height: 300px;
+            /* Reduced height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Content inside banner */
+        .container {
+            display: flex;
+            /* align-items: center; */
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            /* responsive */
+            width: 100%;
+            max-width: 1200px;
+            color: black;
+        }
+
+        .card {
+            width: 250px;
+            flex: 1 1 250px;
+            text-align: left;
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .card h3 {
+            margin: 10px 0 5px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .card p {
+            margin: 3px 0;
+            font-size: 14px;
+        }
+
+        /* Search Box */
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 25px;
+            padding: 5px 10px;
+            width: 220px;
+            flex-shrink: 0;
+            height: 30px;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            flex: 1;
+            padding: 6px;
+            border-radius: 25px;
+            font-size: 14px;
+        }
+
+        .search-box button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            color: black;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .container {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 90%;
+                max-width: 350px;
+            }
+
+            .search-box {
+                width: 90%;
+                max-width: 350px;
+                margin-top: 15px;
+            }
+        }
+
+        /* news */
+        .news {
+            display: flex;
+            gap: 20px;
+            /* padding: 20px; */
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* Left column */
+        .main-content {
+            flex: 2.5;
+        }
+
+        .main-content h2 {
+            margin-bottom: 15px;
+        }
+
+        .main-article {
+            margin-bottom: 30px;
+        }
+
+        .main-article img {
+            width: 100%;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .main-article h3 {
+            margin: 10px 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .main-article p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Right column */
+        .sidebar {
+            flex: 1;
+            background: #eee;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 15px;
+        }
+
+        .news-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .news-item img {
+            width: 100px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .news-info {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .news-info p {
+            margin: 0 0 5px;
+        }
+
+        .read-more {
+            color: blue;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .date-time {
+            font-size: 12px;
+            color: #555;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .news {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                margin-top: 20px;
+            }
+
+            .news-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .news-item img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        /* subscribe */
+        .newsletter-section {
+            max-width: 100%;
+            margin: auto;
+            padding: 20px 20px;
+            /* reduced height */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+            background-color: #b8a474;
+        }
+
+        /* Left content */
+        .text-section {
+            flex: 1 1 100px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .logo img {
+            width: 100px;
+            height: auto;
+        }
+
+        .logo h3 {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .text-section h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .text-section p {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #222;
+        }
+
+        /* Email box */
+        .subscribe-box {
+            display: flex;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 30px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .subscribe-box input {
+            flex: 1;
+            padding: 12px 18px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .subscribe-box button {
+            background: black;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .subscribe-box button:hover {
+            background: #333;
+        }
+
+        /* Right image */
+        .image-section {
+            flex: 1 1 350px;
+            text-align: center;
+        }
+
+        .image-section img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .newsletter-section {
+                /* flex-direction: column; */
+                text-align: center;
+                padding: 20px 15px;
+            }
+
+            .text-section h2 {
+                font-size: 24px;
+            }
+
+            .subscribe-box {
+                margin: auto;
+            }
+        }
+
+        /* whats new */
+        .news-wrapper {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 25px;
+        }
+
+        .categories {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .categories button {
+            background-color: black;
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .categories button:hover {
+            opacity: 0.8;
+        }
+
+        .news-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .news-image {
+            flex: 1 1 300px;
+            max-width: 350px;
+        }
+
+        .news-image img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .news-content {
+            flex: 2 1 400px;
+            max-width: 700px;
+        }
+
+        .news-content h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .news-content p {
+            color: #333;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .meta-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            align-items: center;
+            font-size: 14px;
+            color: #222;
+            margin-top: 10px;
+        }
+
+        .meta-info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .pagination button {
+            background: #f5f5f5;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .pagination button.active {
+            border: 2px solid #007bff;
+            color: #007bff;
+            background: #fff;
+        }
+
+        .pagination button:hover {
+            background: #ddd;
+        }
+
+        @media (max-width: 768px) {
+            .news-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .news-content {
+                text-align: left;
+                max-width: 100%;
+            }
+        }
+
+        /* ===============================
+   MOST VIEWED NEWS SECTION
+   =============================== */
+        .highlighted-news {
+            background: #fff;
+            padding: 40px 20px;
+        }
+
+        .highlight-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .highlight-title {
+            text-align: left;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .highlight-card {
+            background: #e9e9e9;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .highlight-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .highlight-content {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+
+        .highlight-content h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .highlight-content p {
+            font-size: 0.85rem;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            text-align: left;
+        }
+
+        .highlight-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #555;
+            margin-top: auto;
+        }
+
+        .highlight-btn {
+            background: black;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 35px;
+            transition: background 0.3s;
+        }
+
+        .highlight-btn:hover {
+            background: #333;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .highlight-title {
+                font-size: 1.4rem;
+                text-align: center;
+            }
+
+            .highlight-btn {
+                font-size: 0.85rem;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="image/logo.png" alt="logo">
+        </div>
+
+        <nav class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="lastest-news.html">Latest News</a>
+            <a href="business.html">Business</a>
+            <a href="Education.html">Education</a>
+            <a href="politics.html">Politics</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <!-- Hamburger in center -->
+        <i class="fas fa-bars menu-toggle"></i>
+
+        <!-- Sign in + Account always top right -->
+        <div class="right-section">
+            <a href="login.html"><button class="signin-btn">SIGN IN</button></a>
+            <i class="fa-regular fa-circle-user user-icon"></i>
+        </div>
+    </header>
+
+    <section class="banner">
+        <div class="container">
+
+            <!-- Sports -->
+            <div class="card">
+                <img src="image/sports.jpg" alt="Sports">
+                <h3>Sports</h3>
+                <p>Some line about sports</p>
+                <p>Date...</p>
+            </div>
+
+            <!-- Politics -->
+            <div class="card">
+                <img src="image/politics.jpg" alt="Politics">
+                <h3>Politics</h3>
+                <p>Some line about politics</p>
+                <p>Date...</p>
+            </div>
+
+            <!-- Business -->
+            <div class="card">
+                <img src="image/business.jpg" alt="Business">
+                <h3>Business</h3>
+                <p>Some line about Business</p>
+                <p>Date...</p>
+            </div>
+
+            <!-- Search -->
+            <div class="search-box">
+                <input type="text" placeholder="Search">
+                <button>🔍</button>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="container news">
+
+        <!-- Left Column -->
+        <div class="main-content">
+            <h2>TOP NEWS PEAKS HERE ..!</h2>
+
+            <div class="main-article">
+                <img src="image/modi-rahul-1200.jpg" alt="Main News">
+                <h3>PM Decision ipsum dolor sit amet, consectetur adipiscing elit,</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In arena politica, disputationes oriunt de
+                    libertate, aequalitate et iustitia. Dum senatus leges proponit, populus exspectat transparentiam et
+                    responsabilitatem.</p>
+            </div>
+
+            <div class="main-article">
+                <img src="image/brics.jpg" alt="BRICS Meeting">
+                <h3>BRICS Meeting ..!</h3>
+                <p>BRICS UNION Sed interdum, conflict factionum plus attentionem trahit quam solutio problematum.
+                    Politica non solum de legibus est, sed etiam de dialogo, compromissis, et fide inter gubernantes et
+                    gubernatos.</p>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="sidebar">
+            <h2>LATEST NEWS PEAKS HERE ..!</h2>
+
+            <div class="news-item">
+                <img src="image/budget.webp" alt="Budget">
+                <div class="news-info">
+                    <p>Ut verum sit, democratia requirit patientiam, participationem civium, et honestatem in
+                        potestate........</p>
+                    <a href="#" class="read-more">read more →</a>
+                    <div class="date-time">Date: xxx | Time: xxx</div>
+                </div>
+            </div>
+
+            <div class="news-item">
+                <img src="image/education.jpg" alt="Climate">
+                <div class="news-info">
+                    <p>Ut verum sit, democratia requirit patientiam, participationem civium, et honestatem in
+                        potestate........</p>
+                    <a href="#" class="read-more">read more →</a>
+                    <div class="date-time">Date: xxx | Time: xxx</div>
+                </div>
+            </div>
+
+            <div class="news-item">
+                <img src="image/Enviro-Image.png" alt="Education">
+                <div class="news-info">
+                    <p>Ut verum sit, democratia requirit patientiam, participationem civium, et honestatem in
+                        potestate........</p>
+                    <a href="#" class="read-more">read more →</a>
+                    <div class="date-time">Date: xxx | Time: xxx</div>
+                </div>
+            </div>
+
+            <div class="news-item">
+                <img src="image/worldnews.jpg" alt="World News">
+                <div class="news-info">
+                    <p>Ut verum sit, democratia requirit patientiam, participationem civium, et honestatem in
+                        potestate........</p>
+                    <a href="#" class="read-more">read more →</a>
+                    <div class="date-time">Date: xxx | Time: xxx</div>
+                </div>
+            </div>
+
+            <div class="news-item">
+                <img src="image/budget.webp" alt="Budget">
+                <div class="news-info">
+                    <p>Ut verum sit, democratia requirit patientiam, participationem civium, et honestatem in
+                        potestate........</p>
+                    <a href="#" class="read-more">read more →</a>
+                    <div class="date-time">Date: xxx | Time: xxx</div>
+                </div>
+            </div>
+
+            <div class="news-item">
+                <img src="image/education.jpg" alt="Climate">
+                <div class="news-info">
+                    <p>Ut verum sit, democratia requirit patientiam, participationem civium, et honestatem in
+                        potestate........</p>
+                    <a href="#" class="read-more">read more →</a>
+                    <div class="date-time">Date: xxx | Time: xxx</div>
+                </div>
+            </div>
+
+            <div class="news-item">
+                <img src="image/Enviro-Image.png" alt="Education">
+                <div class="news-info">
+                    <p>Ut verum sit, democratia requirit patientiam, participationem civium, et honestatem in
+                        potestate........</p>
+                    <a href="#" class="read-more">read more →</a>
+                    <div class="date-time">Date: xxx | Time: xxx</div>
+                </div>
+            </div>
+
+            <div class="news-item">
+                <img src="image/worldnews.jpg" alt="World News">
+                <div class="news-info">
+                    <p>Ut verum sit, democratia requirit patientiam, participationem civium, et honestatem in
+                        potestate........</p>
+                    <a href="#" class="read-more">read more →</a>
+                    <div class="date-time">Date: xxx | Time: xxx</div>
+                </div>
+            </div>
+
+            <button class="highlight-btn"><a href="lastest-news.html" style="text-decoration: none;color: white;">Read More News ➜</a></button>
+        </div>
+    </div>
+
+    <section class="newsletter-section">
+        <!-- Left Content -->
+        <div class="text-section">
+            <div class="logo">
+                <img src="image/logo.png" alt="Logo">
+                <!-- <h3>DAILYPAPER</h3> -->
+            </div>
+            <h2>Get Every Weekly Updates</h2>
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                when an unknown printer took a galley.
+            </p>
+            <div class="subscribe-box">
+                <input type="email" placeholder="Enter Your Email ....">
+                <button>SUBSCRIBE</button>
+            </div>
+        </div>
+
+        <!-- Right Image -->
+        <div class="image-section">
+            <img src="image/newspaper_reader.jpg" alt="Old Man Reading Newspaper">
+        </div>
+    </section>
+
+    <!-- pagination -->
+    <div class="news-wrapper">
+        <h1>WHATS NEW ...!</h1>
+
+        <div class="categories">
+            <button><a href="home.html" style="text-decoration: none;color: white;">MAGAZINE</a></button>
+            <button><a href="#" style="text-decoration: none;color: white;">SPORTS</a></button>
+            <button><a href="politics.html" style="text-decoration: none;color: white;">POLITICS</a></button>
+            <button><a href="Education.html" style="text-decoration: none;color: white;">EDUCATION</a></button>
+            <button><a href="business.html" style="text-decoration: none;color: white;">BUSINESS</a></button>
+        </div>
+
+        <!-- News Section (Dynamic Content) -->
+        <div id="newsSection" class="news-section">
+            <!-- JavaScript will load content here -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button id="prevBtn">←</button>
+            <button id="pageNum" class="active">1</button>
+            <button id="nextBtn">→</button>
+        </div>
+    </div>
+
+    <!-- ✅ Most Viewed News Section -->
+    <section class="highlighted-news">
+        <div class="highlight-container">
+            <h2 class="highlight-title">MOST VIEWED NEWS ...!</h2>
+
+            <div class="highlight-grid">
+                <!-- Card 1 -->
+                <div class="highlight-card">
+                    <img src="image/time-magazine.jpg" alt="News Image 1" />
+                    <div class="highlight-content">
+                        <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</h3>
+                        <p>
+                            Praesent auctor senatus magna cum auctoritate, sed populus semper
+                            quaerit transparens gubernationem et veram responsabilitatem.
+                            Electiones fiunt cum magna expectatione, et candidati loquuntur de
+                            futuris consiliis.
+                        </p>
+                        <div class="highlight-footer">
+                            <span>by William</span>
+                            <span>📅 Dec,09,2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="highlight-card">
+                    <img src="image/windmill.jpg" alt="News Image 2" />
+                    <div class="highlight-content">
+                        <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</h3>
+                        <p>
+                            Praesent auctor senatus magna cum auctoritate, sed populus semper
+                            quaerit transparens gubernationem et veram responsabilitatem.
+                            Electiones fiunt cum magna expectatione, et candidati loquuntur de
+                            futuris consiliis.
+                        </p>
+                        <div class="highlight-footer">
+                            <span>by Mark Smith</span>
+                            <span>📅 Dec,09,2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="highlight-card">
+                    <img src="image/most-viewed.jpg" alt="News Image 3" />
+                    <div class="highlight-content">
+                        <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</h3>
+                        <p>
+                            Praesent auctor senatus magna cum auctoritate, sed populus semper
+                            quaerit transparens gubernationem et veram responsabilitatem.
+                            Electiones fiunt cum magna expectatione, et candidati loquuntur de
+                            futuris consiliis.
+                        </p>
+                        <div class="highlight-footer">
+                            <span>by Mike</span>
+                            <span>📅 Dec,09,2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="highlight-btn"><a href="most-viewed.html" style="text-decoration: none;color: white;">Read More News ➜</a></button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <img src="image/Screenshot 2025-09-16 134853.png" alt="Logo">
+            <div>
+                <input type="email" placeholder="example@gmail.com">
+                <button>SUBSCRIBE NOW</button>
+            </div>
+        </div>
+
+        <div class="footer-mid">
+            <!-- Get In Touch -->
+            <div>
+                <h3>Get In Touch</h3>
+                <p><strong>Address:</strong> 123, Main Street, Kanniyakumari.</p>
+                <p><strong>Email:</strong> dailypaper@gmail.com</p>
+                <p><strong>Phone:</strong> +91 8967350978</p>
+                <div class="socials">
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <!-- Gallery -->
+            <div class="gallery">
+                <h3>Gallery</h3>
+                <div class="gallery-grid">
+                    <img src="image/footer1.jpg" alt="Gallery 1">
+                    <img src="image/footer2.jpg" alt="Gallery 2">
+                    <img src="image/footer3.jpg" alt="Gallery 3">
+                    <img src="image/footer4.jpg" alt="Gallery 4">
+                    <img src="image/footer5.png" alt="Gallery 5" class="hidden">
+                    <img src="image/footer6.jpg" alt="Gallery 6" class="hidden">
+                    <img src="image/footer7.jpg" alt="Gallery 7" class="hidden">
+                    <img src="image/footer8.jpg" alt="Gallery 8" class="hidden">
+                    <img src="image/footer9.jpg" alt="Gallery 9" class="hidden">
+                    <img src="https://dummyimage.com/100x100/e83e8c/fff" alt="Gallery 10" class="hidden">
+                    <img src="https://dummyimage.com/100x100/6610f2/fff" alt="Gallery 11" class="hidden">
+                    <img src="https://dummyimage.com/100x100/343a40/fff" alt="Gallery 12" class="hidden">
+                    <img src="https://dummyimage.com/100x100/007bff/fff" alt="Gallery 13" class="hidden">
+                    <img src="https://dummyimage.com/100x100/198754/fff" alt="Gallery 14" class="hidden">
+                    <img src="https://dummyimage.com/100x100/d63384/fff" alt="Gallery 15" class="hidden">
+                    <img src="https://dummyimage.com/100x100/0dcaf0/fff" alt="Gallery 16" class="hidden">
+                </div>
+                <a href="#" class="see-more">See More →</a>
+            </div>
+
+            <!-- Categories -->
+            <div>
+                <h3>Categories</h3>
+                <a href="home.html">
+                    <p>> Magazine</p>
+                </a>
+                <a href="lastest-news.html">
+                    <p>> Latest News</p>
+                </a>
+                <a href="politics.html">
+                    <p>> Politics</p>
+                </a>
+                <a href="business.html">
+                    <p>> Business</p>
+                </a>
+                <a href="Education.html">
+                    <p>> Education</p>
+                </a>
+                <a href="contact.html">
+                    <p>> Contact</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© DailyPaper, All rights reserved</p>
+            <p>Designed By, <a href="#">GSO INFO TECH</a></p>
+        </div>
+    </footer>
+
+
+    <script>
+        // Toggle dropdown menu
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        const seeMoreBtn = document.querySelector('.see-more');
+        const galleryItems = document.querySelectorAll('.gallery-grid img');
+        let visibleCount = 4; // already visible
+
+        seeMoreBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Show next 4 images
+            let nextCount = visibleCount + 4;
+            for (let i = visibleCount; i < nextCount && i < galleryItems.length; i++) {
+                galleryItems[i].classList.remove('hidden');
+            }
+
+            visibleCount = nextCount;
+
+            // Hide button if all images are visible
+            if (visibleCount >= galleryItems.length) {
+                seeMoreBtn.style.display = 'none';
+            }
+        });
+
+        //pagination
+        // Sample news data
+        const newsData = [
+            {
+                img: "image/julyaugust-cover.jpg",
+                title: "Auctoritas et Responsabilitas in Foro Publico",
+                para1:
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In arena politica, disputationes oriuntur de libertate, aequalitate et iustitia. Dum senatus leges proponit, populus exspectat transparentiam et responsabilitatem. Electiones fiunt cum magna anticipatione, et candidati promittunt reformationes ad civitatem renovandam.",
+                para2:
+                    "Sed factionum contentiones saepe tardant progressum, dum democratia ipsa requirit patientiam, dialogum et fidem inter gubernantes atque gubernatos.",
+            },
+            {
+                img: "image/mag-cover1.png",
+                title: "Innovation at the Heart of Future Business",
+                para1:
+                    "In mundo negotiorum, technologia accelerat mutationem. Startup societates novas solutiones ad mundi quaestiones proponunt, dum societates antiquiores transformationem digitalem amplectuntur.",
+                para2:
+                    "Praevidetur futurum ubi intelligentia artificialis et data analysis decernendi rationes humanorum augent, non substituunt.",
+            },
+            {
+                img: "image/mag-cover2.png",
+                title: "The Political Pulse of Modern Society",
+                para1:
+                    "Societas moderna politicae participationis novos modos invenit. Social media et communicationes digitales effecerunt ut civitas voces suas audiri possit.",
+                para2:
+                    "Haec mutatio etiam novas provocationes attulit: disinformationem, polarizationem et instantaneam opinionum formationem.",
+            },
+            {
+                img: "image/mag-cover3.jpeg",
+                title: "Education for Tomorrow's World",
+                para1:
+                    "Doctrina in mundo globali non iam limitatur scholis. Technologia aperuit ianuas ad discendum online, usque ad remotas regiones.",
+                para2:
+                    "Innovatio educationis permittit discipulos discere suis modis, suis temporibus, cum accessu ad fontes mundi.",
+            },
+        ];
+
+        let currentPage = 1;
+
+        const totalPages = newsData.length;
+        const newsSection = document.getElementById("newsSection");
+        const pageNum = document.getElementById("pageNum");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        // Function to render news content
+        function renderNews(page) {
+            const news = newsData[page - 1];
+            newsSection.innerHTML = `
+        <div class="news-image">
+          <img src="${news.img}" alt="News Image">
+        </div>
+        <div class="news-content">
+          <h2>${news.title}</h2>
+          <p>${news.para1}</p>
+          <p>${news.para2}</p>
+          <div class="meta-info">
+            <span>⏱️ 06 minutes</span>
+            <span>👁️ 2.3 m</span>
+            <span>💬 153</span>
+            <span>🔗 1.5 k</span>
+          </div>
+        </div>
+      `;
+            pageNum.textContent = page;
+        }
+
+        // Button listeners
+        prevBtn.addEventListener("click", () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderNews(currentPage);
+            }
+        });
+
+        nextBtn.addEventListener("click", () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderNews(currentPage);
+            }
+        });
+
+        // Initial render
+        renderNews(currentPage);
+    </script>
+</body>
+
+</html>

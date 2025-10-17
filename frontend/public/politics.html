@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyPaper</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .logo img {
+            height: 80px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .right-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .signin-btn {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .user-icon {
+            font-size: 22px;
+        }
+
+        /* Hamburger Menu */
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 800px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                padding: 20px;
+                border-bottom: 2px solid #eee;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            /* Keep right-section visible */
+            .right-section {
+                position: absolute;
+                top: 50%;
+                right: 20px;
+                transform: translateY(-50%);
+            }
+
+            /* Center hamburger */
+            .menu-toggle {
+                display: block;
+                margin: 0 auto;
+            }
+
+            .navbar {
+                justify-content: center;
+                position: relative;
+            }
+        }
+        
+        @media (max-width: 380px) {
+            .menu-toggle {
+                margin-right: 140px;
+            }
+        }
+
+        /* Hero Banner */
+        .hero {
+            position: relative;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .hero img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .hero-text {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: #fff;
+            max-width: 50%;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .hero-text h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .hero-text a {
+            color: #c5a56f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 800px) {
+            .hero-text {
+                max-width: 80%;
+                padding: 12px;
+                bottom: 10px;
+                left: 10px;
+            }
+
+            .hero-text h1 {
+                font-size: 16px;
+            }
+
+            .hero-text p {
+                font-size: 12px;
+            }
+
+            .hero-text a {
+                font-size: 12px;
+            }
+        }
+
+        /* Section Titles */
+        section {
+            padding: 40px 5%;
+        }
+
+        section h2 {
+            margin-bottom: 20px;
+            border-left: 5px solid #c5a56f;
+            padding-left: 10px;
+        }
+
+        /* Grid Sections */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #f9f9f9;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-content h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+        }
+
+        .card-content a {
+            color: #c5a56f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Featured Articles with Image Left */
+        .featured-articles {
+            display: grid;
+            gap: 20px;
+        }
+
+        .article {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .article img {
+            width: 200px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .article-content h4 {
+            margin: 0;
+            font-size: 14px;
+            color: #c5a56f;
+        }
+
+        .article-content h3 {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+
+        .article-content a {
+            color: #c5a56f;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .article {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .article img {
+                width: 100%;
+                height: 200px;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            color: #fff;
+            padding: 30px 5% 10px;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #444;
+        }
+
+        .footer-top img {
+            height: 80px;
+        }
+
+        .footer-top input {
+            padding: 10px;
+            border-radius: 20px;
+            border: none;
+            width: 250px;
+        }
+
+        .footer-top button {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            background: #c5a56f;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .footer-mid {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 20px 0;
+            border-bottom: 1px solid #444;
+        }
+
+        .footer-mid h3 {
+            margin-bottom: 10px;
+        }
+
+        .footer-mid p,
+        .footer-mid a {
+            margin: 5px 0;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .socials {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .socials a {
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding-top: 10px;
+            font-size: 14px;
+        }
+
+        .footer-bottom a {
+            color: #c5a56f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .see-more {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #c5a56f;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="image/logo.png" alt="logo">
+        </div>
+
+        <nav class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="lastest-news.html">Latest News</a>
+            <a href="business.html">Business</a>
+            <a href="Education.html">Education</a>
+            <a href="politics.html">Politics</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+        <!-- Hamburger in center -->
+        <i class="fas fa-bars menu-toggle"></i>
+
+        <!-- Sign in + Account always top right -->
+        <div class="right-section">
+            <a href="login.html"><button class="signin-btn">SIGN IN</button></a>
+            <i class="fa-regular fa-circle-user user-icon"></i>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <div class="hero">
+        <img src="image/news-banner.jpg" alt="Hero Banner">
+        <div class="hero-text">
+            <h1>Building Tomorrow Through Honest Leadership.</h1>
+            <p>Politics shapes the destiny of nations and defines the path toward progress or decline. It is not just about power and governance but also about representation and responsibility.</p>
+            <a href="#">Read More →</a>
+        </div>
+    </div>
+
+    <!-- Headlines -->
+    <section>
+        <h2>Top Headlines</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="image/news1.jpg">
+                <div class="card-content">
+                    <h3>‘Swarms of Killer Robots’: Why AI is Terrifying the American Military</h3>
+                    <p>A Q&A with a former Pentagon insider on the AI debates that could shape the future of national security.</p>
+                    <a href="#">Read More →</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="image/news2.jpg">
+                <div class="card-content">
+                    <h3>How the Democrats Could Stage a Comeback, According to History</h3>
+                    <p>Democrats could learn something from studying how wounded political parties returned to power in the past.</p>
+                    <a href="#">Read More →</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="image/news3.jpg">
+                <div class="card-content">
+                    <h3>A ‘Shark Tank’ Investor Grades Trump’s Economy</h3>
+                    <p>Kevin O’Leary aka Mr. Wonderful gets real about Trump’s tariffs, taking a stake in Intel and the future of the Federal Reserve.</p>
+                    <a href="#">Read More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lastest News -->
+    <section>
+        <h2>Lastest News</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="image/news4.jpg">
+                <div class="card-content">
+                    <h3>The Essence of Politics</h3>
+                    <p>Politics shapes the destiny of nations and defines the path toward progress or decline. It is not just about power and governance but also about representation and responsibility.</p>
+                    <a href="#">Read More →</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="image/news5.jpg">
+                <div class="card-content">
+                    <h3>Democracy and Leadership</h3>
+                    <p>Democracy thrives when leadership is guided by transparency and accountability. In a world filled with challenges—economic, social, and environmental—political systems must evolve to reflect the voice of the people.</p>
+                    <a href="#">Read More →</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="image/news6.jpg">
+                <div class="card-content">
+                    <h3>The Role of Citizens in Politics</h3>
+                    <p>Every citizen plays a vital role in shaping political landscapes. Politics is not confined to parliament halls; it lives in every decision we make as a community.</p>
+                    <a href="#">Read More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Articles -->
+    <section>
+        <h2>Featured Articles</h2>
+        <div class="featured-articles">
+            <div class="article">
+                <img src="image/news7.jpeg">
+                <div class="article-content">
+                    <h4>Politics</h4>
+                    <h3>Leadership with Vision, Governance with Purpose</h3>
+                    <p>A nation’s strength lies in the clarity of its leadership and the sincerity of its purpose. Politics should not merely be about winning elections but about building a sustainable and just future.
+                    </p>
+                    <a href="#">Read More →</a>
+                </div>
+            </div>
+            <div class="article">
+                <img src="image/news8.jpg">
+                <div class="article-content">
+                    <h4>Politics</h4>
+                    <h3>One Nation, Many Voices, Shared Future</h3>
+                    <p>In the diversity of opinions lies the beauty of democracy. A strong nation embraces differences, encourages dialogue, and values every voice, regardless of status or background</p>
+                    <a href="#">Read More →</a>
+                </div>
+            </div>
+            <div class="article">
+                <img src="image/news9.jpg">
+                <div class="article-content">
+                    <h4>Politics</h4>
+                    <h3>Peace Through Participation, Progress Through Unity</h3>
+                    <p>Society thrives on the strength of human relationships and shared values. The social world influences how we think, communicate, and collaborate to build communities that foster growth and understanding.</p>
+                    <a href="#">Read More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <img src="image/Screenshot 2025-09-16 134853.png" alt="Logo">
+            <div>
+                <input type="email" placeholder="example@gmail.com">
+                <button>SUBSCRIBE NOW</button>
+            </div>
+        </div>
+
+        <div class="footer-mid">
+            <!-- Get In Touch -->
+            <div>
+                <h3>Get In Touch</h3>
+                <p><strong>Address:</strong> 123, Main Street, Kanniyakumari.</p>
+                <p><strong>Email:</strong> dailypaper@gmail.com</p>
+                <p><strong>Phone:</strong> +91 8967350978</p>
+                <div class="socials">
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <!-- Gallery -->
+            <div class="gallery">
+                <h3>Gallery</h3>
+                <div class="gallery-grid">
+                    <img src="image/footer1.jpg" alt="Gallery 1">
+                    <img src="image/footer2.jpg" alt="Gallery 2">
+                    <img src="image/footer3.jpg" alt="Gallery 3">
+                    <img src="image/footer4.jpg" alt="Gallery 4">
+                    <img src="image/footer5.png" alt="Gallery 5" class="hidden">
+                    <img src="image/footer6.jpg" alt="Gallery 6" class="hidden">
+                    <img src="image/footer7.jpg" alt="Gallery 7" class="hidden">
+                    <img src="image/footer8.jpg" alt="Gallery 8" class="hidden">
+                    <img src="image/footer9.jpg" alt="Gallery 9" class="hidden">
+                    <img src="https://dummyimage.com/100x100/e83e8c/fff" alt="Gallery 10" class="hidden">
+                    <img src="https://dummyimage.com/100x100/6610f2/fff" alt="Gallery 11" class="hidden">
+                    <img src="https://dummyimage.com/100x100/343a40/fff" alt="Gallery 12" class="hidden">
+                    <img src="https://dummyimage.com/100x100/007bff/fff" alt="Gallery 13" class="hidden">
+                    <img src="https://dummyimage.com/100x100/198754/fff" alt="Gallery 14" class="hidden">
+                    <img src="https://dummyimage.com/100x100/d63384/fff" alt="Gallery 15" class="hidden">
+                    <img src="https://dummyimage.com/100x100/0dcaf0/fff" alt="Gallery 16" class="hidden">
+                </div>
+                <a href="#" class="see-more">See More →</a>
+            </div>
+
+            <!-- Categories -->
+            <div>
+                <h3>Categories</h3>
+                <a href="home.html">
+                    <p>> Magazine</p>
+                </a>
+                <a href="lastest-news.html">
+                    <p>> Latest News</p>
+                </a>
+                <a href="politics.html">
+                    <p>> Politics</p>
+                </a>
+                <a href="business.html">
+                    <p>> Business</p>
+                </a>
+                <a href="Education.html">
+                    <p>> Education</p>
+                </a>
+                <a href="contact.html">
+                    <p>> Contact</p>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© DailyPaper, All rights reserved</p>
+            <p>Designed By, <a href="#">GSO INFO TECH</a></p>
+        </div>
+    </footer>
+
+
+    <script>
+        // Toggle dropdown menu
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        const seeMoreBtn = document.querySelector('.see-more');
+        const galleryItems = document.querySelectorAll('.gallery-grid img');
+        let visibleCount = 4; // already visible
+
+        seeMoreBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Show next 4 images
+            let nextCount = visibleCount + 4;
+            for (let i = visibleCount; i < nextCount && i < galleryItems.length; i++) {
+                galleryItems[i].classList.remove('hidden');
+            }
+
+            visibleCount = nextCount;
+
+            // Hide button if all images are visible
+            if (visibleCount >= galleryItems.length) {
+                seeMoreBtn.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DailyPaper - Sign In</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: url(image/login\ bg.jpg) no-repeat center center/cover;
+      position: relative;
+    }
+
+    /* Back Button */
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: #c1a875;
+      padding: 10px 14px;
+      border-radius: 50%;
+      text-decoration: none;
+      color: black;
+      font-size: 18px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: background 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #a68c5d;
+    }
+
+    .container {
+      background: #c1a875;
+      padding: 40px 30px;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo img {
+      width: 120px;
+      margin-bottom: 10px;
+    }
+
+    .logo h2 {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    h3 {
+      margin: 20px 0;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 40px 12px 15px;
+      border: none;
+      outline: none;
+      border-radius: 50px;
+      font-size: 14px;
+    }
+
+    .input-group i {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #333;
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      margin: 10px 0 20px;
+    }
+
+    .options label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .options a {
+      text-decoration: none;
+      color: black;
+      font-weight: 500;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 50px;
+      background: black;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #333;
+    }
+
+    .social-login {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .social-login i {
+      font-size: 22px;
+      cursor: pointer;
+      padding: 10px;
+      border: 1px solid black;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    .social-login i:hover {
+      background: black;
+      color: white;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .container {
+        padding: 30px 20px;
+      }
+      h3 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Back Button -->
+  <a href="home.html" class="back-btn">
+    <i class="fa-solid fa-arrow-left"></i>
+  </a>
+
+  <div class="container">
+    <!-- Logo -->
+    <div class="logo">
+      <img src="image/logo.png" alt="DailyPaper Logo">
+      <!-- <h2>DAILYPAPER</h2> -->
+    </div>
+
+    <h3>SIGN IN</h3>
+
+    <!-- Input Fields -->
+    <div class="input-group">
+      <input type="text" placeholder="Username">
+    </div>
+
+    <div class="input-group">
+      <input type="password" placeholder="Password">
+      <i class="fa-solid fa-eye-slash"></i>
+    </div>
+
+    <!-- Options -->
+    <div class="options">
+      <label>
+        <input type="checkbox">
+        Remember Me
+      </label>
+      <a href="#">Forget Password ?</a>
+    </div>
+
+    <!-- Sign in button -->
+    <button class="btn">SIGN IN <i class="fa-solid fa-arrow-right-to-bracket"></i></button>
+
+    <!-- Social Login -->
+    <div class="social-login">
+      <i class="fa-brands fa-google"></i>
+      <i class="fa-brands fa-facebook-f"></i>
+      <i class="fa-brands fa-apple"></i>
+    </div>
+  </div>
+
+</body>
+</html>
